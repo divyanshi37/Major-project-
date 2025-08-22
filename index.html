@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shringaar – Indian Fashion & Beauty</title>
+  <style>
+    :root{
+      --brand:#b30059;
+      --brand-2:#ff9ecf;
+      --ink:#222;
+      --muted:#666;
+      --bg:#fff7fb;
+      --card:#ffffff;
+      --ring:rgba(179,0,89,.25);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;
+      color:var(--ink); background:linear-gradient(180deg,var(--bg),#fff);
+    }
+    header{
+      position:sticky; top:0; z-index:10; backdrop-filter:saturate(1.2) blur(8px);
+      background:rgba(255,255,255,.85); border-bottom:1px solid #f2d2e6;
+    }
+    .container{max-width:1100px; margin:0 auto; padding:16px}
+    .nav{display:flex; gap:12px; align-items:center; justify-content:space-between}
+    .brand{ color:rgba(177, 17, 17, 0.822);font-size:30px;display:flex; gap:10px; align-items:center; font-weight:800; letter-spacing:.3px}
+    .tagline{font-size:.85rem; color:var(--muted)}
+    .controls{display:flex; gap:10px; align-items:center}
+    .search{flex:1; display:flex; gap:8px; align-items:center; max-width:420px;
+      background:#fff; border:1px solid #f3c9df; border-radius:999px; padding:8px 12px}
+    .search input{border:none; outline:none; width:100%; font-size:.95rem; background:transparent}
+    .btn, button{
+      border:none; outline:none; cursor:pointer; border-radius:12px; padding:10px 14px; font-weight:600;
+      background:var(--brand); color:white; box-shadow:0 6px 16px -8px var(--ring); transition:transform .05s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .ghost{background:#fff; color:var(--brand); border:1px solid #f3c9df}
+    .chips{display:flex; gap:8px; flex-wrap:wrap; padding:14px 0}
+    .chip{padding:8px 12px; background:#fff; border:1px solid #f3c9df; color:var(--ink); border-radius:999px; cursor:pointer; font-weight:600; font-size:.9rem}
+    .chip.active{background:var(--brand); color:#fff; border-color:transparent}
+    .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+    .card{background:var(--card); border:1px solid #f2d2e6; border-radius:16px; overflow:hidden; display:flex; flex-direction:column}
+    .thumb{aspect-ratio:1/1; overflow:hidden;}
+    .thumb img{width:100%; height:100%; object-fit:cover;}
+    .meta{padding:12px; display:flex; flex-direction:column; gap:6px}
+    .title{font-weight:700}
+    .price{font-weight:800}
+    .muted{color:var(--muted); font-size:.9rem}
+    .footer{margin:24px 0 40px; text-align:center; color:var(--muted); font-size:.9rem}
+    .drawer{position:fixed; top:0; right:-420px; width:380px; height:100vh; background:#fff; border-left:1px solid #f2d2e6;
+      box-shadow:-10px 0 30px -20px rgba(0,0,0,.2); transition:right .25s ease; z-index:40; display:flex; flex-direction:column}
+    .drawer.open{right:0}
+    .drawer header{position:sticky; top:0; background:#fff; border-bottom:1px solid #f3c9df}
+    .drawer .items{padding:16px; display:flex; flex-direction:column; gap:12px; overflow:auto}
+    .cart-row{display:grid; grid-template-columns:56px 1fr auto; gap:10px; align-items:center}
+    .cart-thumb{width:56px; height:56px; display:grid; place-items:center; border:1px solid #f2d2e6; border-radius:8px; background:#fff; overflow:hidden}
+    .cart-thumb img{width:100%; height:100%; object-fit:cover;}
+    .qty{display:inline-flex; align-items:center; gap:8px}
+    .qty button{padding:4px 10px; border-radius:8px}
+    .totals{padding:16px; border-top:1px solid #f3c9df; display:flex; flex-direction:column; gap:10px}
+    .badge{position:relative}
+    .badge[data-count]:after{content:attr(data-count); position:absolute; top:-6px; right:-6px; background:var(--brand); color:#fff; font-weight:800; font-size:.7rem; padding:2px 6px; border-radius:999px}
+
+    
+    .hero {
+      background:
+        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)),
+        url("https://dbdzm869oupei.cloudfront.net/img/photomural/preview/76948.png")
+        no-repeat center center / cover;
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color:white;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    }
+    .hero p {
+      font-size: 1.15rem;
+      max-width: 700px;
+      line-height: 1.6;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      margin: 0 16px;
+    }
+    .hero button {
+      margin-top: 16px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: var(--brand);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .06s ease, opacity .2s ease;
+    }
+    .hero button:active { transform: translateY(1px); }
+    .hero button:hover { opacity:.92; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div>
+          <div>Shringaar</div>
+          <div class="tagline">Indian Clothes • Jewellery • Makeup</div>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="search">
+          <span>🔎</span>
+          <input id="search" type="search" placeholder="Search saree, jhumka, kajal…" />
+        </div>
+        <button class="ghost" id="cartBtn"><span class="badge" id="cartBadge" data-count="0">🛍</span></button>
+      </div>
+    </div>
+  </header>
+
+  
+  <section class="hero">
+    <h1>Welcome to Shringaar</h1>
+    <p>"Elegance isn’t about being noticed — it’s about being remembered.
+      Celebrate the beauty of tradition with outfits and ornaments that tell your story."</p>
+    <button onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">
+      Shop Now
+    </button>
+  </section>
+
+  <div class="container">
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div class="footer">© <span id="year"></span> Shringaar · For college project demo. No payment processing.</div>
+  </div>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <header class="container" style="display:flex; align-items:center; justify-content:space-between">
+      <h3>🛍 Your Cart</h3>
+      <button class="ghost" id="closeDrawer">Close ✕</button>
+    </header>
+    <div class="items" id="cartItems"></div>
+    <div class="totals">
+      <div style="display:flex; justify-content:space-between; font-weight:800">
+        <span>Total</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+      <details>
+        <summary class="muted">Proceed to checkout (demo)</summary>
+        <form id="checkoutForm" style="display:grid; gap:8px; margin-top:8px">
+          <input required placeholder="Full Name" />
+          <input required placeholder="Phone" />
+          <input required placeholder="Address" />
+          <button type="submit">Place Order (Demo)</button>
+          <small class="muted">This is a college demo. No real orders.</small>
+        </form>
+      </details>
+    </div>
+  </aside>
+
+  <script>
+    const PRODUCTS = [
+      {id:1, name:"Banarasi Silk Saree", price:3999, category:"Clothes",img:"https://mahavirs.com/cdn/shop/files/768424E9-D5D4-4479-BC8A-DD5AB2536BDC.jpg?v=1735049257", desc:"Rich zari work, festive."},
+      {id:2, name:"Cotton Kurta Set", price:1499, category:"Clothes", img:"https://www.labelmadhurithakkar.com/cdn/shop/files/IMG_1071_250x.jpg?v=1739437097", desc:"Breathable daily wear."},
+      {id:3, name:"Lehenga Choli", price:5499, category:"Clothes", img:"https://cdn.shopify.com/s/files/1/0601/8344/5561/files/SequenceEmbroideryWorkGeorgetteMultiColorLehengaCholi_5.png?v=1685700419", desc:"Embroidered, wedding."},
+      {id:4, name:"Anarkali Suit", price:2999, category:"Clothes", img:"https://m.media-amazon.com/images/I/71+uD7UoaIL._UY1100_.jpg", desc:"Flowy silhouette."},
+      {id:5, name:"Jhumka Earrings", price:699, category:"Jewellery", img:"https://priyaasi.com/cdn/shop/products/EAR-PR-50687.CR.jpg?v=1691064335&width=300", desc:"Golden with multicolor stone."},
+      {id:6, name:"Kundan Necklace", price:2499, category:"Jewellery", img:"https://assets.myntassets.com/w_412,q_30,dpr_3,fl_progressive,f_webp/assets/images/2024/OCTOBER/24/GNylrQ7W_97a14e7c3ef44d64ae7e5581297da4bd.jpg", desc:"Traditional set."},
+      {id:7, name:"Bangles Set", price:899, category:"Jewellery", img:"https://nikharjewellery.in/wp-content/uploads/2023/11/IMG_4288-scaled.jpg", desc:"Colorful glass."},
+      {id:8, name:"Maang Tikka", price:599, category:"Jewellery", img:"https://ishhaara.com/cdn/shop/files/ishhaara-multicolor-gold-plated-jadau-kundan-maang-tikka-91756959598855.jpg?v=1740126377", desc:"Festive essential."},
+      {id:9, name:"Kajal (Kohl)", price:199, category:"Makeup", img:"https://m.media-amazon.com/images/S/aplus-media-library-service-media/3da8652c-93cb-4987-bc3b-76661d52b029.__CR0,0,970,600_PT0_SX970_V1___.jpg", desc:"Smudge-proof."},
+      {id:10, name:"Liquid Lipcolor", price:399, category:"Makeup", img:"https://shop.recodestudios.com/cdn/shop/files/3_8b0efb92-4d1c-490d-9844-017cea5bd2d0.jpg?v=1750744752", desc:"Matte finish."},
+      {id:11, name:"BB Cream", price:349, category:"Makeup", img:"https://discoverpilgrim.com/cdn/shop/files/Beige-Glow-BB-Cream-Listing-Images-1080x1080-8.jpg?v=1750908551&width=1080", desc:"Full coverage."},
+      {id:12, name:"Nail Paint", price:149, category:"Makeup", img:"https://elegancyonline.com/cdn/shop/files/IMG_4820.jpg?v=1719577440&width=1445", desc:"Glossy shades."},
+      {id:13, name:"Phulkari Dupatta", price:999, category:"Clothes", img:"https://www.mysticloom.com/cdn/shop/files/blush-phurkari-dupatta-for-women-by-Mysticloom-img3_2048x.jpg?v=1719891482", desc:"Punjabi embroidery."},
+      {id:14, name:"Nose Ring (Nath)", price:499, category:"Jewellery", img:"https://m.media-amazon.com/images/I/71FDxlJCxTL._UY1100_.jpg", desc:"Delicate hoop."},
+      {id:15, name:"Sindoor", price:129, category:"Makeup", img:"https://swissbeauty.in/cdn/shop/products/SB-LS02_1c.jpg?v=1748634253", desc:"Everyday pack."},
+      {id:16, name:"Bindi", price:899, category:"Makeup", img:"https://www.jiomart.com/images/product/original/rvooxhnpvd/comet-busters-red-bindi-for-women-product-images-orvooxhnpvd-p592221447-1-202206270158.jpg?im=Resize=(420,420)", desc:"Everyday pack."},
+      {id:17, name:"Sandal", price:3000, category:"Accessories", img:"https://marcloire.com/cdn/shop/files/ML07015902_2_1080x1080.jpg?v=1684908648", desc:"Comfy and stylish."},
+      {id:18, name:"Mascara & Eyeliner (2-in-1)", price:2300, category:"Makeup", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSw0SuivG0bOIL0C0YOdyXlS59C3AcZkgmRqw&s", desc:"Long lasting & smudge-proof."},
+      {id:19, name:"Anklet", price:5000, category:"Jewellery", img:"https://inayahjewellery.com/cdn/shop/files/IMG_4632_9aec91cd-c3da-44e2-bd49-6e422bf41c96.jpg?v=1725984411&width=1946", desc:"Beaded."},
+      {id:20, name:"Rings", price:500, category:"Jewellery", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1oUZNoIXW9BEHUK035kDTftg_xsImpUIE7g&s", desc:"American diamond & silver work."},
+    ];
+
+    const CATEGORIES = ["All", "Clothes", "Jewellery", "Makeup", "Accessories"];
+    let state = { query:"", category:"All", cart:[] };
+
+    function formatINR(n){
+      return new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(n)
+    }
+
+    
+    const chipWrap = document.getElementById('chips');
+    CATEGORIES.forEach(cat=>{
+      const b = document.createElement('button');
+      b.className = 'chip' + (cat===state.category? ' active':'');
+      b.textContent = cat;
+      b.onclick = ()=>{ state.category=cat; syncChips(); renderProducts() };
+      chipWrap.appendChild(b);
+    });
+    function syncChips(){
+      [...chipWrap.children].forEach(el=>{ el.classList.toggle('active', el.textContent===state.category) });
+    }
+
+    
+    const grid = document.getElementById('grid');
+    function productMatches(p){
+      const q = state.query.trim().toLowerCase();
+      const inCat = state.category==='All' || p.category===state.category;
+      const inQ = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+      return inCat && inQ;
+    }
+    function renderProducts(){
+      grid.innerHTML = '';
+      const list = PRODUCTS.filter(productMatches);
+      if(!list.length){
+        grid.innerHTML = '<p class="muted">No items found. Try a different search.</p>';
+        return;
+      }
+      list.forEach(p=>{
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <div class="thumb"><img src="${p.img}" alt="${p.name}"></div>
+          <div class="meta">
+            <div class="title">${p.name}</div>
+            <div class="muted">${p.category} • ${p.desc}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px">
+              <div class="price">${formatINR(p.price)}</div>
+              <button data-id="${p.id}">Add</button>
+            </div>
+          </div>`;
+        card.querySelector('button').onclick = ()=> addToCart(p.id);
+        grid.appendChild(card);
+      });
+    }
+
+    
+    const search = document.getElementById('search');
+    search.addEventListener('input', e=>{ state.query = e.target.value; renderProducts(); });
+
+    
+    const drawer = document.getElementById('drawer');
+    const cartBtn = document.getElementById('cartBtn');
+    const closeDrawer = document.getElementById('closeDrawer');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartBadge = document.getElementById('cartBadge');
+
+    cartBtn.onclick = ()=> toggleDrawer(true);
+    closeDrawer.onclick = ()=> toggleDrawer(false);
+    function toggleDrawer(open){ drawer.classList.toggle('open', !!open); drawer.setAttribute('aria-hidden', !open); }
+
+    function addToCart(id){
+      const idx = state.cart.findIndex(x=>x.id===id);
+      if(idx>-1) state.cart[idx].qty += 1; else state.cart.push({id, qty:1});
+      updateCartUI();
+    }
+    function changeQty(id,delta){
+      const item = state.cart.find(x=>x.id===id); if(!item) return;
+      item.qty += delta; if(item.qty<=0){ state.cart = state.cart.filter(x=>x.id!==id); }
+      updateCartUI();
+    }
+    function removeItem(id){ state.cart = state.cart.filter(x=>x.id!==id); updateCartUI(); }
+
+    function updateCartUI(){
+      localStorage.setItem('shringaar_cart', JSON.stringify(state.cart));
+      cartItems.innerHTML = '';
+      let total = 0; let count=0;
+      state.cart.forEach(({id, qty})=>{
+        const p = PRODUCTS.find(x=>x.id===id); if(!p) return; total += p.price*qty; count += qty;
+        const row = document.createElement('div'); row.className='cart-row';
+        row.innerHTML = `
+          <div class="cart-thumb"><img src="${p.img}" alt="${p.name}"></div>
+          <div>
+            <div class="title">${p.name}</div>
+            <div class="muted">${formatINR(p.price)} × ${qty}</div>
+            <div class="qty">
+              <button class="ghost" aria-label="Decrease">−</button>
+              <span>${qty}</span>
+              <button class="ghost" aria-label="Increase">+</button>
+              <button class="ghost" style="margin-left:auto">Remove</button>
+            </div>
+          </div>
+          <div style="font-weight:800">${formatINR(p.price*qty)}</div>`;
+        const [dec, inc, rem] = row.querySelectorAll('button');
+        dec.onclick = ()=>changeQty(id,-1);
+        inc.onclick = ()=>changeQty(id, 1);
+        rem.onclick = ()=>removeItem(id);
+        cartItems.appendChild(row);
+      });
+      cartTotal.textContent = formatINR(total);
+      cartBadge.setAttribute('data-count', count);
+    }
+
+    
+    try{ state.cart = JSON.parse(localStorage.getItem('shringaar_cart')||'[]'); }catch{ state.cart=[]; }
+    document.getElementById('checkoutForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Thank you! This is a demo order for your college project.');
+      state.cart = []; updateCartUI(); toggleDrawer(false);
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+    renderProducts();
+    updateCartUI();
+  </script>
+</body>
+</html>
